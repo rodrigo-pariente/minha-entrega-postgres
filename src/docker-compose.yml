@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=minha_entrega
+    volumes:
+      - minha_entrega_data:/postgres
+
+volumes:
+  minha_entrega_data:
