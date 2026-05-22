@@ -50,7 +50,7 @@ Deletar um rastreio
 
 `DELETE localhost:port/orders/$code`
 
-<img src="https://github.com/rodrigo-pariente/minha-entrega-postgres/blob/main/img/screencapture_curl.png" alt="Gif de uma requisição http" width="900">
+<img src="https://github.com/rodrigo-pariente/minha-entrega-postgres/blob/main/img/screencapture_curl.gif" alt="Gif de uma requisição http" width="900">
 
 
 ### CLI
