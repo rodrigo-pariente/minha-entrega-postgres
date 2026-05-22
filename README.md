@@ -11,66 +11,84 @@
 ### API
 
 Criar rastreio
+
 `POST {"code": "codigo-de-rastreio", "name": "nome-pro-rastreio"} localhost:port/orders`
 
 Renomear rastreio
+
 `PUT {"name": "novo-nome"} localhost:port/orders/$code`
 
 Ler os rastreios
+
 `GET localhost:port/orders`
 
 Ler um único rastreio
+
 `GET localhost:port/orders/$code`
 
 Ler os últimos eventos de cada rastreio
+
 `GET localhost:port/orders/inspect`
 
 Ler os últimos eventos de um único rastreio
+
 `GET localhost:port/orders/$code/inspect`
 
 Atualizar informações de todos os rastreios
+
 `POST localhost:port/orders/refresh`
 
 Atualizar informações de um único rastreio
+
 `POST localhost:port/orders/$code/refresh`
 
 Forçar a atualização até em rastreios já entregues
+
 `POST localhost:port/orders/dumb_refresh`
 
 Deletar um rastreio
+
 `DELETE localhost:port/orders/$code`
 
-<img src="https://github.com/rodrigo-pariente/minha-entrega-postgres/blob/main/images/screencapture_curl.png" alt="Gif de uma requisição http" width="900">
+<img src="https://github.com/rodrigo-pariente/minha-entrega-postgres/blob/main/img/screencapture_curl.png" alt="Gif de uma requisição http" width="900">
 
 
 ### CLI
 
 Criar rastreio
+
 `$ minha-entrega add <code> <name>`
 
 Renomear rastreio
+
 `$ minha-entrega update <name> <new-name>`
 
 Visualizar rastreios configurados
+
 `$ minha-entrega list [name ...]`
 
-<img src="https://github.com/rodrigo-pariente/minha-entrega-postgres/blob/main/images/screenshot_list.png" alt="Captura de tela da linda visualização de lista do Minha Entrega" width="900">
+<img src="https://github.com/rodrigo-pariente/minha-entrega-postgres/blob/main/img/screenshot_list.png" alt="Captura de tela da linda visualização de lista do Minha Entrega" width="900">
 
 Visualizar as atualizações de um rastreio
+
 `$ minha-entrega events <name>`
 
 Visualizar a atualização mais recente dos rastreios
+
 `$ minha-entrega inspect [name ...]`
 
-<img src="https://github.com/rodrigo-pariente/minha-entrega-postgres/blob/main/images/screenshot_inspect.png" alt="Imagem de uma linda visualização das últimas informações de entrega" width="900">
+<img src="https://github.com/rodrigo-pariente/minha-entrega-postgres/blob/main/img/screenshot_inspect.png" alt="Imagem de uma linda visualização das últimas informações de entrega" width="900">
 
 Atualizar os eventos dos rastreios
+
 `$ minha-entrega refresh [name ...]`
 
 Remover um rastreio do banco de dados
+
 `$ minha-entrega remove <name>`
 
 Para mais informações de uso
+
 `$ minha-entrega --help`
 
 
