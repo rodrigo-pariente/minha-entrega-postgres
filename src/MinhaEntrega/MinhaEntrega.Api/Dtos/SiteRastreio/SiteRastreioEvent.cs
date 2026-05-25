@@ -13,5 +13,9 @@ record SiteRastreioEvent(
 
     [property: JsonPropertyName("unidade")] SiteRastreioUnit? Unit,
 
-    [property: JsonPropertyName("unidadeDestino")] SiteRastreioUnit? DestinationUnit
+    [property: JsonPropertyName("unidadeDestino")] SiteRastreioUnit? DestinationUnit,
+
+    [property: JsonPropertyName("rota")] string? Route,
+
+    [property: JsonPropertyName("descricaoWeb")] string? WebDescription
 );

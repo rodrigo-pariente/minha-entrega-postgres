@@ -95,16 +95,38 @@ public class SiteRastreioClient(string apiKey)
             events.Add(SiteRastreioEventToEvent(siteRastreioEvent));
         }
 
+        IReadOnlyList<string> analysisDesc = ["PAR07", "PAR10", "PAR21"];
+        var lastEvent = sROrder.Events.Last();
+
         OrderStatus status;
-        if (sROrder.HasDeliveryEvent)
+        if (lastEvent?.WebDescription == "POSTAGEM")
         {
-            status = OrderStatus.Deliver;
+            status = OrderStatus.Created;
         }
-        else if (sROrder.Status.Equals("E"))
+        else if(sROrder.Status == "P")
+        {
+            status = OrderStatus.Created;
+        }
+        else if(
+            lastEvent?.WebDescription is not null &&
+            analysisDesc.Contains(lastEvent.WebDescription)
+        )
+        {
+            status = OrderStatus.Analysis;
+        }
+        else if(lastEvent?.Route == "RETIRADA")
+        {
+            status = OrderStatus.Analysis;
+        }
+        else if (sROrder.Status == "E")
         {
             status = OrderStatus.Delivered;
         }
-        else if(sROrder.Status.Equals("T"))
+        else if (sROrder.HasDeliveryEvent)
+        {
+            status = OrderStatus.Deliver;
+        }
+        else if(sROrder.Status == "T")
         {
             status = OrderStatus.Transit;
         }
@@ -113,11 +135,18 @@ public class SiteRastreioClient(string apiKey)
             status = OrderStatus.Unknown;
         }
 
-        var date = DateOnly.ParseExact(
+        DateOnly? date = null;
+
+        if (DateOnly.TryParseExact(
             sROrder.ExpectedDate,
             "dd/MM/yyyy",
-            System.Globalization.CultureInfo.InvariantCulture
-        );
+            System.Globalization.CultureInfo.InvariantCulture,
+            System.Globalization.DateTimeStyles.None,
+            out var parsedDate
+        ))
+        {
+            date = parsedDate;
+        }
 
         return new OrderDetails(code, name, events, status, date);
     }
