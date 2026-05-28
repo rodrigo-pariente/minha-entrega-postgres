@@ -149,7 +149,7 @@ Teste a interface do usuário usando
 
 ## Motivação
 
-Esse projeto foi realizado exclusivamente para aprender ASP.NET, Razor, Entity Framework Core, PostgreSQL e Docker através da prática.
+Esse projeto foi realizado exclusivamente para aprender **ASP.NET**, **Razor**, **Entity Framework Core**, **PostgreSQL** e **Docker** através da prática.
 
 
 <p align="center"> [ 📦 🐘 ]</p>
