@@ -166,7 +166,7 @@
                                     @if (order.Events.Count != 0)
                                     {
                                         <div class="event">
-                                            @{ var orderEvent = order.Events.Last(); }
+                                            @{ var orderEvent = order.Events.First(); }
                                             <p><b>De:</b> <span> @orderEvent.Origin </span></p>
                                             <p><b>Para:</b> <span> @orderEvent.Destination </span></p>
                                             <p><b>Desc:</b> <span> @orderEvent.Description </span></p>
