@@ -20,7 +20,7 @@ static class DtoConvert
         return new OrderDto(
             order.Code,
             order.Name,
-            [.. order.Events.Select(EventToEventDto)], // spread operator
+            [.. order.Events.OrderBy(e => e.Date).Select(EventToEventDto)], // spread operator
             order.Status,
             order.DeliveryDate
         );

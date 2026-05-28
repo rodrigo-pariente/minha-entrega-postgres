@@ -10,9 +10,22 @@ using MinhaEntrega.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("WebApp", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:5208")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 builder.AddMinhaEntregaDb();
 
 var app = builder.Build();
+
+app.UseCors("WebApp");
 
 var siteRastreioClient = new SiteRastreioClient(builder.Configuration["SiteRastreioClient:ApiKey"]!);
 

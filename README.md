@@ -53,6 +53,13 @@ Deletar um rastreio
 <img src="https://github.com/rodrigo-pariente/minha-entrega-postgres/blob/main/img/screencapture_curl.gif" alt="Gif de uma requisição http" width="900">
 
 
+### WebUI
+
+O WebApp oferece uma interface gráfica intuitiva para interagir com o banco de dados através de requisições
+
+<img src="https://github.com/rodrigo-pariente/minha-entrega-postgres/blob/main/img/screencapture_webui.gif" alt="Gif de uma requisição http" width="900">
+
+
 ### CLI
 
 Criar rastreio
@@ -122,6 +129,15 @@ Execute o servidor
 Os dados de rastreio são obtidos através da API Site Rastreio.
 
 
+### MinhaEntrega.WebApp
+
+A WebUI é gerada com Razor e faz requisições para a API.
+
+Pode ser subida com
+
+`$ dotnet run`
+
+
 ### MinhaEntrega.Cli
 
 A CLI foi escrita em Python usando Typer e Rich.
@@ -133,7 +149,7 @@ Teste a interface do usuário usando
 
 ## Motivação
 
-Esse projeto foi realizado exclusivamente para aprender ASP.NET, Entity Framework Core, PostgreSQL e Docker através da prática.
+Esse projeto foi realizado exclusivamente para aprender ASP.NET, Razor, Entity Framework Core, PostgreSQL e Docker através da prática.
 
 
 <p align="center"> [ 📦 🐘 ]</p>

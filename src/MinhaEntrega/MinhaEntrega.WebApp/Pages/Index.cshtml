@@ -1,0 +1,247 @@
+@page "{handler?}"
+@model IndexModel
+@using MinhaEntrega.WebApp.Client
+@using MinhaEntrega.WebApp.Models
+
+<body>
+
+<header>
+    <div class="header">
+        <img src=".\img\header-logo.svg" class="img" alt="Logo do minha entrega">
+        <h1 class="header-title">Minha Entrega</h1>
+    </div>
+
+    <script>
+        async function deleteOrder(id) {
+            await fetch("http://localhost:5089/orders/" + id, { method: "DELETE" });
+        }
+        async function deleteSelectedOrders() {
+            const orderCheckboxes = document.querySelectorAll(".order-checkbox");
+
+            const selected = Array.from(orderCheckboxes).filter(cb => cb.checked);
+
+            for (const cb of selected) {
+                await deleteOrder(cb.value);
+            }
+        }
+        async function refreshOrder(id) {
+            await fetch("http://localhost:5089/orders/" + id + "/refresh", { method: "POST" });
+        }
+        async function refreshAllOrders() {
+            await fetch("http://localhost:5089/orders/refresh", { method: "POST" });
+        }
+        async function refreshSelectedOrders() {
+            const selectAll = document.getElementById("select-all");
+            if (selectAll.checked) {
+              refreshAllOrders();
+              return;
+            }
+
+            const orderCheckboxes = document.querySelectorAll(".order-checkbox");
+
+            const selected = Array.from(orderCheckboxes).filter(cb => cb.checked);
+
+            for (const cb of selected) {
+                await refreshOrder(cb.value);
+            }
+        }
+        async function dumbRefreshOrders() {
+            await fetch("http://localhost:5089/orders/dumb_refresh", { method: "POST" });
+        }
+    </script>
+    <div class="actions">
+        <div class="dropdown-button">
+            <img src=".\img\buttons\button-dropdown-tools.svg" class="button" alt="Mais opções">
+            <form asp-page-handler="refresh" method="post" class="dropdown-actions">
+                <input type="button" value="Forçar a atualização de todos" class="dropdown-action" onclick="dumbRefreshOrders()">
+            </form>
+        </div>
+
+        <form asp-page-handler="refresh" method="post">
+            <input type="image" src=".\img\buttons\button-refresh.svg" class="button" alt="Atualizar entrega" onclick="refreshSelectedOrders()">
+        </form>
+        <form asp-page-handler="refresh" method="post">
+            <input type="image" src=".\img\buttons\button-delete.svg" class="button" alt="Deletar entrega" onclick="deleteSelectedOrders()">
+        </form>
+        <form>
+            <input id="select-all" type="checkbox" alt="Selecionar tudo">
+        </form>
+        <div></div><div></div>
+    </div>
+</header>
+
+<main>
+    <div class="orders">
+        <span class="decorator-block-top"></span>
+        <span class="decorator-block-middle"></span>
+        <span class="decorator-block-bottom"></span>
+        @{
+            var orders = await MinhaEntregaClient.GetOrdersAsync();
+            if (orders is null)
+            {
+                return;
+            }
+            <script>
+                function toggleVisibility(id) {
+                    document
+                        .getElementById(id)
+                        .classList
+                        .toggle("hidden");
+                }
+                function hideElement(id) {
+                    console.log("escondendo");
+                    const element = document.getElementById(id);
+                    if (!element.classList.contains("hidden")) {
+                        element.classList.add("hidden");
+                    }
+                }
+                function showElement(id) {
+                    console.log("mostrando");
+                    const element = document.getElementById(id);
+                    if (element.classList.contains("hidden")) {
+                        element.classList.remove("hidden");
+                    }
+                }
+                function showOnlyEvents(eventsId, inspectId, renameId) {
+                    showElement(eventsId);
+                    hideElement(inspectId);
+                    hideElement(renameId);
+                }
+                function showOnlyInspect(inspectId, eventsId, renameId) {
+                    showElement(inspectId);
+                    hideElement(eventsId);
+                    hideElement(renameId);
+                }
+                function showOnlyRename(renameId, inspectId, eventsId) {
+                    showElement(renameId);
+                    hideElement(eventsId);
+                    hideElement(inspectId);
+                }
+            </script>
+            foreach (var order in orders)
+            {
+                var actionsId = $"actions-{order.Code}";
+                var eventsId = $"events-{order.Code}";
+                var inspectId = $"inspect-{order.Code}";
+                var renameId = $"rename-{order.Code}";
+                var checkboxId = $"checkbox-{order.Code}";
+
+                <div class="order">
+                    <button type="button" class="header" onclick="toggleVisibility('@actionsId')">
+                        <div class="details">
+                            <span class="status">@order.Status</span>
+                            <span class="date">@order.DeliveryDate</span>
+                        </div>
+                        <div class="right">
+                            <div class="span-no-wrap">
+                                <span class="monospace">@order.Code</span>
+                                <span class="name title-separator"> - </span>
+                                <span class="name">@order.Name</span>
+                            </div>
+                            <input id="@checkboxId" type="checkbox" class="order-checkbox" alt="Selecionar" onclick="event.stopPropagation()" value="@order.Code">
+                        </div>
+                    </button>
+                    <div id="@actionsId" class="hidden">
+                        <div class="actions">
+                            <input type="button" value="Eventos" class="action" onclick="showOnlyEvents('@eventsId', '@inspectId', '@renameId')">
+                            <input type="button" value="Inspeção" class="action" onclick="showOnlyInspect('@inspectId', '@eventsId', '@renameId')">
+                            <input type="button" value="Renomear" class="action" onclick="showOnlyRename('@renameId', '@inspectId', '@eventsId')">
+                        </div>
+                        <div class="panel">
+                            <div id="@eventsId" class="hidden">
+                                <div class="events-panel">
+                                @{ order.Events.Reverse(); }
+                                @foreach(Event orderEvent in order.Events)
+                                {
+                                    <div class="event">
+                                        <p><b>De:</b> <span> @orderEvent.Origin </span></p>
+                                        <p><b>Para:</b> <span> @orderEvent.Destination </span></p>
+                                        <p><b>Desc:</b> <span> @orderEvent.Description </span></p>
+                                    </div>
+                                }
+                                </div>
+                            </div>
+                            <div id="@inspectId" class="hidden">
+                                <div class="inspect-panel">
+                                    @if (order.Events.Count != 0)
+                                    {
+                                        <div class="event">
+                                            @{ var orderEvent = order.Events.Last(); }
+                                            <p><b>De:</b> <span> @orderEvent.Origin </span></p>
+                                            <p><b>Para:</b> <span> @orderEvent.Destination </span></p>
+                                            <p><b>Desc:</b> <span> @orderEvent.Description </span></p>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div id="@renameId" class="hidden">
+                                <div class="rename-panel">
+                                    <p>Novo Nome para o Rastreio</p>
+                                    <form class="bottom-bar" method="post" asp-page-handler="update">
+                                        <input type="hidden" name="code" value=@order.Code>
+                                        <input type="text" placeholder="Ex.: minha-incrivel-entrega" name="name" class="name-textfield">
+                                        <input type="image" src=".\img\buttons\button-finish.svg" class="order-button" alt="Concluir operação">
+                                    </form>
+                                </div>
+                            </div>
+                            <script>
+                                showElement('@eventsId');
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="add-order-container">
+              <input type="image" src=".\img\buttons\button-add.svg" class="order-button" alt="Adicionar entrega" onclick="toggleVisibility('add-order-panel')">
+
+              <div id="add-order-panel" class="hidden">
+                <form class="add-order-panel" method="post" asp-page-handler="add">
+                  <div class="add-order-panel-header">
+                    <h2>Novo Evento</h2>
+                  </div>
+
+                  <div class="add-order-panel-fields">
+                    <p>Código de Rastreio</p>
+                    <input type="text" placeholder="Ex.: AN123456789BR" class="add-order-panel-field" name="code">
+
+                    <p class="lazyp">Nome para o Rastreio</p>
+                    <div class="add-order-panel-name-field">
+                      <input type="text" placeholder="Ex.: livros-novos" class="add-order-panel-field" name="name">
+                      <input type="image" src=".\img\buttons\button-finish.svg" class="order-button" alt="Concluir adição">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+        }
+    </div>
+    <script>
+        const selectAll =
+            document.getElementById("select-all");
+
+        const orderCheckboxes =
+            document.querySelectorAll(".order-checkbox");
+
+        selectAll.addEventListener("change", () => {
+            orderCheckboxes.forEach(cb => {
+                cb.checked = selectAll.checked;
+            });
+        });
+
+        orderCheckboxes.forEach(cb => {
+            cb.addEventListener("change", () => {
+
+                const allChecked =
+                    Array.from(orderCheckboxes)
+                         .every(x => x.checked);
+
+                selectAll.checked = allChecked;
+            });
+        });
+    </script>
+    <script>
+    </script>
+</main>
+
+</body>

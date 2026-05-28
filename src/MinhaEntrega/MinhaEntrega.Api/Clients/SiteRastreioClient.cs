@@ -96,14 +96,15 @@ public class SiteRastreioClient(string apiKey)
         }
 
         IReadOnlyList<string> analysisDesc = ["PAR07", "PAR10", "PAR21"];
+
         var lastEvent = sROrder.Events.Last();
 
         OrderStatus status;
-        if (lastEvent?.WebDescription == "POSTAGEM")
+        if (sROrder.Status == "E")
         {
-            status = OrderStatus.Created;
+            status = OrderStatus.Delivered;
         }
-        else if(sROrder.Status == "P")
+        else if (lastEvent?.WebDescription == "POSTAGEM")
         {
             status = OrderStatus.Created;
         }
@@ -116,11 +117,7 @@ public class SiteRastreioClient(string apiKey)
         }
         else if(lastEvent?.Route == "RETIRADA")
         {
-            status = OrderStatus.Analysis;
-        }
-        else if (sROrder.Status == "E")
-        {
-            status = OrderStatus.Delivered;
+            status = OrderStatus.Retrieval;
         }
         else if (sROrder.HasDeliveryEvent)
         {

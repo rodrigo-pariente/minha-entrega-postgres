@@ -1,0 +1,70 @@
+html * {
+  font-family: Poppins, Cantarell, sans-serif;
+  color: var(--g4);
+  border-radius: 10px;
+  line-height: 1.1;
+}
+
+body {
+  background-color: var(--g0);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  margin: 0;
+  display: grid;
+  grid-auto-flow: row;
+  margin-top: 55px;
+  background-color: var(--g3);
+  border-radius: 0;
+  text-align: center;
+  margin-top: auto;
+  font-weight: 300;
+}
+
+.footer p {
+  padding: 12px 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+input {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+input[type=checkbox] {
+  transform: scale(2.5);
+  margin: 0;
+}
+
+input[type=text] {
+  border: none;
+  border-radius: 10px;
+  height: 3rem;
+}
+
+form {
+  margin: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}

@@ -1,0 +1,342 @@
+/* Container */
+.orders {
+  /*Behaviour*/
+  display: grid;
+  grid-auto-flow: row;
+  grid-row-gap: 30px;
+  margin: 0 120px;
+
+  /*Appearance*/
+  background-color: var(--g2);
+  padding: 30px;
+  border-style: solid;
+  border-color: var(--b2);
+}
+
+.orders .order-button {
+  justify-self: end;
+  height: 2.5rem;
+  margin-left: 30px;
+}
+
+/* Order */
+.orders .order {
+  background-color: var(--g1);
+}
+
+/* Order Header */
+.orders .order .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+  border: none;
+  justify-self: stretch;
+  /* gap: 20px; */
+
+  background-color: var(--g0);
+}
+
+.orders .order .details {
+  font-size: 1.5rem;
+  display: grid;
+  grid-auto-flow: row;
+  grid-row-gap: 0;
+}
+
+.orders .order .details .status {
+  font-weight: 500;
+}
+
+.orders .order .details .date {
+  margin-top: 12px;
+  font-size: 1.2rem;
+  font-weight: 200;
+}
+
+.orders .order .right {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  font-size: 1.8rem;
+}
+
+.orders .order .right .span-no-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  white-space: nowrap;
+  gap: 8px;
+}
+
+.orders .order .name {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+  .orders .order .title-separator {
+    display: inline;
+  }
+
+
+/* Order Actions */
+.orders .order .actions {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: start;
+  padding: 30px 30px 18px 30px;
+  column-gap: 18px;
+}
+
+.orders .order .actions .action {
+  margin: 0;
+  padding: 12px 11px;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--g3);
+}
+
+.orders .order .actions .action:focus{
+  background-color: var(--g0);
+}
+
+
+/* Rename */
+.orders .panel {
+  margin: 0 30px 30px 30px;
+}
+
+.orders .panel .rename-panel {
+  display: block;
+}
+
+.orders .panel .rename-panel p {
+  font-weight: 600;
+  padding-bottom: 18px;
+  margin: 0;
+}
+
+.orders .panel .rename-panel .bottom-bar {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr auto;
+  gap: 30px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.orders .panel .rename-panel .bottom-bar .name-textfield {
+  width: 100%;
+}
+
+
+/* Event */
+.orders .panel .event {
+  padding: 12px 11px;
+  border-radius: 10px;
+  background-color: var(--g0);
+}
+
+.orders .panel .event p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.orders .panel .events-panel {
+  display: grid;
+  grid-auto-flow: row;
+  grid-row-gap: 12px;
+}
+
+.orders .panel .events-panel span {
+  font-weight: 300;
+}
+
+.orders .panel .inspect-panel {
+  display: block;
+}
+
+
+/* Add Order */
+.orders .add-order-container {
+  display: grid;
+  grid-auto-flow: row;
+  gap: 18px;
+}
+
+.orders .add-order-panel {
+  background-color: var(--g1);
+}
+
+.orders .add-order-panel .add-order-panel-header {
+  display: flex;
+  align-items: center;
+  padding: 30px 30px;
+
+  background-color: var(--g0);
+}
+
+.orders .add-order-panel .add-order-panel-fields {
+  font-weight: 600;
+  padding: 30px;
+}
+
+.orders .add-order-panel .add-order-panel-field {
+  width: 100%;
+}
+
+.orders .add-order-panel .lazyp {
+  margin-top: 30px;
+}
+
+.orders .add-order-panel .add-order-panel-name-field {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  grid-template-columns: 1fr auto;
+  gap: 30px;
+  width: 100%;
+}
+
+.decorator-block-top {
+  position: absolute;
+  margin-top: -0px;
+  margin-left: -46px;
+  background: var(--b2);
+  width: 1rem;
+  height: 1.4rem;
+  border-radius: 10% 0 0 10%;
+  z-index: -1;
+}
+
+.decorator-block-middle {
+  position: absolute;
+  margin-top: calc(-0px + 1rem);
+  margin-left: -46px;
+  background: var(--p2);
+  width: 1rem;
+  height: 1.4rem;
+  border-radius: 10% 0 0 10%;
+  z-index: -1;
+}
+
+.decorator-block-bottom {
+  position: absolute;
+  margin-top: calc(-0px + 2rem);
+  margin-left: -46px;
+  background: var(--y2);
+  width: 1rem;
+  height: 1.4rem;
+  border-radius: 10% 0 0 10%;
+  z-index: -1;
+}
+
+.monospace {
+  font-family: "Courier Prime", "Courier New", Courier, monospace !important;
+}
+
+@media (max-width: 1200px) {
+  .orders .order .details {
+    font-size: 1rem;
+  }
+
+  .orders .order .details .date {
+    margin-top: 12px;
+    font-size: 0.8rem;
+  }
+
+  .orders .order .right {
+    font-size: 1.2rem;
+    justify-content: end;
+  }
+
+  .orders .order .details {
+    font-size: 1rem;
+  }
+
+  .orders .order .name {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .orders {
+    margin: 0;
+    padding: 6px;
+  }
+
+  .orders .add-order-panel .add-order-panel-header {
+    padding: 6px;
+  }
+
+  .orders .order .header {
+    gap: 30px;
+  }
+
+  .orders .order .right .span-no-wrap {
+    white-space: normal;
+    flex-wrap: wrap;
+  }
+
+  .orders .order .actions {
+    padding: 6px;
+    column-gap: 6px;
+  }
+
+  .orders .panel {
+    margin: 0 6px 6px 6px;
+  }
+
+  .decorator-block-top {
+    margin-top: -25px;
+    margin-left: 6px;
+    transform: rotate(90deg);
+  }
+
+  .decorator-block-middle {
+    margin-top: -25px;
+    margin-left: calc(6px + 1rem);
+    transform: rotate(90deg);
+  }
+
+  .decorator-block-bottom {
+    margin-top: -25px;
+    margin-left: calc(6px + 2rem);
+    transform: rotate(90deg);
+  }
+
+  .orders .order .header {
+    align-items: center;
+    padding: 30px 18px;
+  }
+}
+
+@media (max-width: 450px) {
+  .orders .order .title-separator {
+    display: none;
+  }
+
+  .orders .order .header {
+    gap: 18px;
+  }
+
+  .orders .order .details {
+    font-size: 1rem;
+  }
+
+  .orders .order .details .date {
+    margin-top: 12px;
+    font-size: 0.6rem;
+  }
+
+  .orders .order .right {
+    font-size: 0.8rem;
+    justify-content: end;
+  }
+
+  .orders .order .name {
+    font-size: 1rem;
+  }
+}
